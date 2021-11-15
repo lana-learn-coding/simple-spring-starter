@@ -9,19 +9,17 @@
             <div class="mb-3">
                 <form:label path="greet" cssClass="form-label">Greet clause</form:label>
                 <form:input path="greet" cssClass="form-control" cssErrorClass="form-control is-invalid"
-                            placeholder="Hello"/>
-                <form:errors path="greet" cssClass="invalid-feedback"/>
+                            readonly="true" placeholder="Hello"/>
             </div>
 
             <div class="mb-3">
                 <form:label path="target" cssClass="form-label">Target to greet</form:label>
                 <form:input path="target" cssClass="form-control" cssErrorClass="form-control is-invalid"
-                            placeholder="World"/>
-                <form:errors path="target" cssClass="invalid-feedback"/>
+                            readonly="true" placeholder="World"/>
             </div>
 
             <div>
-                <button class="btn btn-primary btn-sm">Submit</button>
+                <a href="/hello" class="btn btn-primary btn-sm">Back</a>
             </div>
         </form:form>
     </jsp:attribute>
