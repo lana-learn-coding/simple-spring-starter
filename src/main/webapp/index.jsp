@@ -4,6 +4,6 @@
 <layout:base>
     <jsp:attribute name="title">Spring Application</jsp:attribute>
     <jsp:attribute name="body">
-      Hello World!
+      <a href="/products">Products App</a>
     </jsp:attribute>
 </layout:base>
