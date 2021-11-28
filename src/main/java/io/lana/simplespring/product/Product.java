@@ -1,5 +1,6 @@
 package io.lana.simplespring.product;
 
+import io.lana.simplespring.lib.controller.Identified;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,7 +16,7 @@ import javax.validation.constraints.NotNull;
 @Setter
 @Entity
 @Table(name = "product")
-public class Product {
+public class Product implements Identified {
     @Id
     private String id;
 
