@@ -7,8 +7,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 public class CrudController<T extends Identified> extends AbstractCrudController<T> {
-    public CrudController(CrudRepository<T> repo, String path) {
-        super(repo, path);
+    public CrudController(CrudRepository<T> repo) {
+        super(repo);
     }
 
     @GetMapping

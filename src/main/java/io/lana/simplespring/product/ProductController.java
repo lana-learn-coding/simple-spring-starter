@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/products")
 class ProductController extends AbstractQueryableCrudController<Product> {
     protected ProductController(CrudRepository<Product> repo) {
-        super(repo, "products");
+        super(repo);
     }
 
     @Override

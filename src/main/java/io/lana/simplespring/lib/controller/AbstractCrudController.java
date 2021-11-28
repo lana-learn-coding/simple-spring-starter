@@ -4,10 +4,7 @@ import io.lana.simplespring.lib.repo.CrudRepository;
 import io.lana.simplespring.lib.utils.ModelUtils;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
@@ -17,10 +14,15 @@ public abstract class AbstractCrudController<T extends Identified> {
     protected final String path;
     protected final Class<T> clazz;
 
-    protected AbstractCrudController(CrudRepository<T> repo, String path) {
-        this.clazz = ModelUtils.getGenericType(getClass());
-        this.path = path;
+    protected AbstractCrudController(CrudRepository<T> repo) {
         this.repo = repo;
+        this.clazz = ModelUtils.getGenericType(getClass());
+
+        var paths = getClass().getAnnotation(RequestMapping.class).value();
+        if (paths.length != 1) {
+            throw new IllegalArgumentException("Cannot initialize controller " + clazz.getName() + ": Invalid number of path specified via @RequestMapping. Required 1, found" + paths.length);
+        }
+        this.path = paths[0];
     }
 
     @GetMapping("create")

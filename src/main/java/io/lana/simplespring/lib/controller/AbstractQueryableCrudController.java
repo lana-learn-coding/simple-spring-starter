@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 public abstract class AbstractQueryableCrudController<T extends Identified> extends AbstractCrudController<T> {
-    protected AbstractQueryableCrudController(CrudRepository<T> repo, String path) {
-        super(repo, path);
+    protected AbstractQueryableCrudController(CrudRepository<T> repo) {
+        super(repo);
     }
 
     @GetMapping
