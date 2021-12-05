@@ -37,6 +37,12 @@
                             cssErrorClass="form-control form-control-sm is-invalid" disabled="true"/>
             </div>
 
+             <div class="form-group mb-2">
+                 <form:label path="category.name" cssClass="form-label">Category</form:label>
+                 <form:input path="category.name" cssClass="form-control form-control-sm"
+                             cssErrorClass="form-control is-invalid form-control-sm" disabled="true"/>
+             </div>
+
             <div>
                 <a class="btn btn-primary btn-sm" href="/products">Back</a>
             </div>

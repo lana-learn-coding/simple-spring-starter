@@ -42,6 +42,14 @@
                 <form:errors path="price" cssClass="invalid-feedback"/>
             </div>
 
+            <div class="form-group mb-2">
+                <form:label path="category" cssClass="form-label">Category</form:label>
+                <form:select path="category" items="${categories}" itemLabel="name" itemValue="id"
+                             cssClass="form-select form-select-sm"
+                             cssErrorClass="form-select form-select-sm is-invalid"/>
+                <form:errors path="category" cssClass="invalid-feedback"/>
+            </div>
+
             <div>
                 <button class="btn btn-primary btn-sm" type="submit">Submit</button>
                 <a class="btn btn-success btn-sm" href="/products">Back</a>

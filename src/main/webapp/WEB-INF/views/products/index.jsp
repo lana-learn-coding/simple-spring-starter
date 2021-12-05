@@ -2,6 +2,7 @@
 <%@taglib prefix="component" tagdir="/WEB-INF/tags/components" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="helper" tagdir="/WEB-INF/tags/helpers" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <jsp:useBean id="data" scope="request" type="java.util.List<io.lana.simplespring.product.Product>"/>
 <jsp:useBean id="meta" scope="request" type="io.lana.simplespring.lib.repo.pageable.Page.PageMeta"/>
@@ -25,7 +26,7 @@
                 <a class="btn btn-primary btn-sm" href="/products/create">New Product</a>
             </div>
             <form method="get" class="d-flex">
-                <helper:inherit-param excludes="search"/>
+                <helper:inherit-param excludes="search,category"/>
                 <input type="text"
                        style="max-width: 300px"
                        class="form-control form-control-sm"
@@ -33,6 +34,13 @@
                        placeholder="Search item"
                        aria-label="search"
                        value="${param.search}">
+                <select name="category" aria-label="category" class="form-select form-select-sm ms-2"
+                        style="max-width: 250px">
+                    <option value="" ${empty param.category ? 'selected' : ''}>-- Select Category --</option>
+                    <c:forEach var="item" items="${categories}">
+                        <option value="${item.id}" ${param.category == item.id ? 'selected' : ''}>${item.name}</option>
+                    </c:forEach>
+                </select>
                 <button class="btn btn-sm btn-primary ms-2" type="submit">Search</button>
             </form>
             <table class="table">
@@ -44,6 +52,7 @@
                     <th scope="col">Producer</th>
                     <th scope="col">Year Making</th>
                     <th scope="col">Price</th>
+                    <th scope="col">Category</th>
                     <th scope="col">Action</th>
                 </tr>
                 </thead>
@@ -56,6 +65,7 @@
                         <td>${ item.producer }</td>
                         <td>${ item.yearMaking }</td>
                         <td>${ item.price }</td>
+                        <td>${ item.category.name }</td>
                         <td>
                             <a href="/products/detail/${item.id}" class="btn btn-primary btn-sm me-1">View</a>
                             <a href="/products/update/${item.id}" class="btn btn-primary btn-sm me-1">Edit</a>
