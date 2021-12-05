@@ -37,13 +37,13 @@ public abstract class AbstractCrudController<T extends Identified> {
             return path + "/create";
         }
         repo.save(entity);
-        return "redirect:/" + path;
+        return "redirect:" + path;
     }
 
     @GetMapping("delete/{id}")
     public String destroy(@PathVariable final String id) {
         repo.first("id = ?1", id).ifPresent(repo::delete);
-        return "redirect:/" + path;
+        return "redirect:" + path;
     }
 
     @GetMapping("update/{id}")
@@ -62,7 +62,7 @@ public abstract class AbstractCrudController<T extends Identified> {
         if (item.isEmpty()) throw new IllegalArgumentException("Id not found: " + uid);
 
         repo.update(entity);
-        return new ModelAndView("redirect:/" + path + "/detail/{id}", "id", uid);
+        return new ModelAndView("redirect:" + path + "/detail/{id}", "id", uid);
     }
 
     @GetMapping("detail/{id}")
