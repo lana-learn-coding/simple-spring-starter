@@ -134,16 +134,25 @@ public class CrudRepositorySkeleton<T> implements CrudRepository<T> {
     @Override
     public long count(String condition, Object... params) {
         var session = sessionFactory.getCurrentSession();
-        var query = session.createQuery("select count(entity) from " + clazz.getSimpleName() + " entity where " + condition, Long.class);
+        var hql = buildCount(condition);
+        var query = session.createQuery(hql, Long.class);
         query.setMaxResults(1);
         addQueryParams(query, params);
         return Optional.ofNullable(query.getSingleResult()).orElse(0L);
     }
 
+
+    private String buildCount(String hql) {
+        if (StringUtils.startsWith(hql, "select")) {
+            hql = hql.replaceFirst("(select).+?(?=from)", "");
+        }
+        return "select count(*) " + buildHql(hql);
+    }
+
     @Override
     public long count() {
         var session = sessionFactory.getCurrentSession();
-        var query = session.createQuery("select count(entity) from " + clazz.getSimpleName() + " entity", Long.class);
+        var query = session.createQuery("select count(*) from " + clazz.getSimpleName() + " entity", Long.class);
         query.setMaxResults(1);
         return Optional.ofNullable(query.getSingleResult()).orElse(0L);
     }
@@ -171,7 +180,7 @@ public class CrudRepositorySkeleton<T> implements CrudRepository<T> {
         if (StringUtils.startsWithAny(hql, "select", "from")) {
             return hql;
         }
-        var built = "from " + clazz.getSimpleName() + " entity";
+        var built = "from " + clazz.getSimpleName() + " " + clazz.getSimpleName().toLowerCase();
         if (StringUtils.isBlank(hql)) return built;
         if (StringUtils.startsWith(hql, "where")) return built + " " + hql;
         return built + " where " + hql;
