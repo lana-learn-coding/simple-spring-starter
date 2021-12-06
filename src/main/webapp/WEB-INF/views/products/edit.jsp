@@ -6,7 +6,7 @@
     <jsp:attribute name="title">Update Product</jsp:attribute>
     <jsp:attribute name="body">
         <h4>Update Product</h4>
-        <form:form modelAttribute="entity">
+        <form:form modelAttribute="entity" enctype="multipart/form-data">
             <div class="form-group mb-2">
                 <form:label path="id" cssClass="form-label">Id</form:label>
                 <form:input path="id" cssClass="form-control form-control-sm"
@@ -49,6 +49,21 @@
                              cssErrorClass="form-select form-select-sm is-invalid"/>
                 <form:errors path="category" cssClass="invalid-feedback"/>
             </div>
+
+            <div class="form-group mb-2">
+                <label for="files" class="form-label">Images</label>
+                <input type="file" name="files" id="files" class="form-control form-control-sm" multiple>
+            </div>
+
+            <c:if test="${not empty entity.images}">
+                <div class="form-group mb-2 row" style="max-width: 300px">
+                    <c:forTokens items="${entity.images}" delims="," var="item">
+                        <div class="col-6">
+                            <img src="${item}" alt="image" class="w-100 rounded">
+                        </div>
+                    </c:forTokens>
+                </div>
+            </c:if>
 
             <div>
                 <button class="btn btn-primary btn-sm" type="submit">Submit</button>

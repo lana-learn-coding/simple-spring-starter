@@ -53,6 +53,7 @@
                     <th scope="col">Year Making</th>
                     <th scope="col">Price</th>
                     <th scope="col">Category</th>
+                    <th scope="col">Images</th>
                     <th scope="col">Action</th>
                 </tr>
                 </thead>
@@ -66,6 +67,17 @@
                         <td>${ item.yearMaking }</td>
                         <td>${ item.price }</td>
                         <td>${ item.category.name }</td>
+                        <td>
+                            <c:if test="${not empty item.images}">
+                                <div class="row" style="max-width: 150px">
+                                    <c:forTokens items="${item.images}" delims="," var="item">
+                                        <div class="col-12 mb-2">
+                                            <img src="${item}" alt="image" class="w-100 rounded">
+                                        </div>
+                                    </c:forTokens>
+                                </div>
+                            </c:if>
+                        </td>
                         <td>
                             <a href="/products/detail/${item.id}" class="btn btn-primary btn-sm me-1">View</a>
                             <a href="/products/update/${item.id}" class="btn btn-primary btn-sm me-1">Edit</a>

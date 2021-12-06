@@ -43,6 +43,16 @@
                              cssErrorClass="form-control is-invalid form-control-sm" disabled="true"/>
              </div>
 
+            <c:if test="${not empty entity.images}">
+                <div class="form-group mb-2 row" style="max-width: 300px">
+                    <c:forTokens items="${entity.images}" delims="," var="item">
+                        <div class="col-6">
+                            <img src="${item}" alt="image" class="w-100 rounded">
+                        </div>
+                    </c:forTokens>
+                </div>
+            </c:if>
+
             <div>
                 <a class="btn btn-primary btn-sm" href="/products">Back</a>
             </div>

@@ -33,6 +33,8 @@ public class Product implements Identified {
     @Min(0)
     private Double price;
 
+    private String images;
+
     @NotNull
     @ManyToOne
     @JoinColumn(name = "category_id")
