@@ -10,6 +10,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.NoResultException;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -55,7 +56,11 @@ public class CrudRepositorySkeleton<T> implements CrudRepository<T> {
         var query = session.createQuery(hql, clazz);
         addQueryParams(query, params);
         query.setMaxResults(1);
-        return Optional.ofNullable(query.getSingleResult());
+        try {
+            return Optional.ofNullable(query.getSingleResult());
+        } catch (NoResultException ignored) {
+            return Optional.empty();
+        }
     }
 
     @Override
