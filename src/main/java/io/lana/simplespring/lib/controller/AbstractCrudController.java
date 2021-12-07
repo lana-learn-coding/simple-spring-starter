@@ -2,6 +2,7 @@ package io.lana.simplespring.lib.controller;
 
 import io.lana.simplespring.lib.repo.CrudRepository;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,6 +18,10 @@ public abstract class AbstractCrudController<T extends Identified<ID>, ID> exten
     @PostMapping("create")
     public String store(@Valid @ModelAttribute("entity") final T entity, final BindingResult result) {
         if (result.hasErrors()) {
+            return path + "/create";
+        }
+        if (repo.exist("id = ?1", entity.getId())) {
+            result.addError(new FieldError("entity", "id", entity.getId(), false, null, null, "Id has already been taken"));
             return path + "/create";
         }
         repo.save(entity);

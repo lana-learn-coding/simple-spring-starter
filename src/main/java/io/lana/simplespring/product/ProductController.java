@@ -10,6 +10,7 @@ import org.apache.commons.vfs2.FileSystemManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -51,6 +52,10 @@ class ProductController extends AbstractResourceController<Product, String> {
     public String store(@RequestParam("files") final Collection<MultipartFile> files, @Valid @ModelAttribute("entity") final Product entity,
                         final BindingResult result) {
         if (result.hasErrors()) {
+            return path + "/create";
+        }
+        if (repo.exist("id = ?1", entity.getId())) {
+            result.addError(new FieldError("entity", "id", entity.getId(), false, null, null, "Id has already been taken"));
             return path + "/create";
         }
         entity.setImages(saveFiles(files));
