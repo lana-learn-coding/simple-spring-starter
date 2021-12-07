@@ -1,7 +1,7 @@
 package io.lana.simplespring.lib.controller;
 
-public interface Identified {
+public interface Identified<T> {
     String getId();
 
-    void setId(String id);
+    void setId(T id);
 }

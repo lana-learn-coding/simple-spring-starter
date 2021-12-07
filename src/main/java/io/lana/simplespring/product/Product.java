@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 @Setter
 @Entity
 @Table(name = "product")
-public class Product implements Identified {
+public class Product implements Identified<String> {
     @Id
     @NotBlank
     private String id;

@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/products")
-class ProductController extends AbstractResourceController<Product> {
+class ProductController extends AbstractResourceController<Product, String> {
     private final CrudRepository<Category> categoryRepo;
     private final FileSystemManager fs;
     private final FileObject imagesFolder;

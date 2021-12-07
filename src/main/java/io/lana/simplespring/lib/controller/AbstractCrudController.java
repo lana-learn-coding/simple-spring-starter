@@ -9,7 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 
-public abstract class AbstractCrudController<T extends Identified> extends AbstractResourceController<T> {
+public abstract class AbstractCrudController<T extends Identified<ID>, ID> extends AbstractResourceController<T, ID> {
     protected AbstractCrudController(CrudRepository<T> repo) {
         super(repo);
     }
@@ -24,7 +24,7 @@ public abstract class AbstractCrudController<T extends Identified> extends Abstr
     }
 
     @PostMapping("update/{uid}")
-    public ModelAndView update(@PathVariable final String uid, @Valid @ModelAttribute("entity") final T entity, final BindingResult result) {
+    public ModelAndView update(@PathVariable final ID uid, @Valid @ModelAttribute("entity") final T entity, final BindingResult result) {
         entity.setId(uid);
         if (result.hasErrors()) return new ModelAndView("products/edit");
         var item = repo.first("id = ?1", uid);

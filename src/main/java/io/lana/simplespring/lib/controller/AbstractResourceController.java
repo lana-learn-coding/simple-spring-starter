@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-public abstract class AbstractResourceController<T extends Identified> {
+public abstract class AbstractResourceController<T extends Identified<ID>, ID> {
     protected final CrudRepository<T> repo;
     protected final String path;
     protected final Class<T> clazz;
@@ -30,13 +30,13 @@ public abstract class AbstractResourceController<T extends Identified> {
     }
 
     @GetMapping("delete/{id}")
-    public String destroy(@PathVariable final String id) {
+    public String destroy(@PathVariable final ID id) {
         repo.first("id = ?1", id).ifPresent(repo::delete);
         return "redirect:" + path;
     }
 
     @GetMapping("update/{id}")
-    public String edit(@PathVariable final String id, Model model) {
+    public String edit(@PathVariable final ID id, Model model) {
         var item = repo.first("id = ?1", id);
         if (item.isEmpty()) throw new IllegalArgumentException("Id not found: " + id);
         model.addAttribute("entity", item.get());
@@ -44,7 +44,7 @@ public abstract class AbstractResourceController<T extends Identified> {
     }
 
     @GetMapping("detail/{id}")
-    public String show(@PathVariable final String id, Model model) {
+    public String show(@PathVariable final ID id, Model model) {
         var item = repo.first("id = ?1", id);
         if (item.isEmpty()) throw new IllegalArgumentException("Id not found: " + id);
         model.addAttribute("entity", item.get());
